@@ -28,7 +28,7 @@ namespace Analog
         {
             InitializeComponent();
             deserializeSettings();
-            textBox2.Text = serialPort;
+            textBox_ComPort.Text = serialPort;
         }
         
 
@@ -36,7 +36,7 @@ namespace Analog
         private string versjon = Assembly.GetExecutingAssembly().GetName().Version.ToString();
        
         //instillinger
-        private string regex;
+        private string regexPattern;
         private string serialPort;
         private int baudRate;
         private int dataBits;
@@ -64,40 +64,21 @@ namespace Analog
 
         public void deserializeSettings()
         {
-            string json = getJson();
-            var jss = new JavaScriptSerializer();
-            var key = jss.Deserialize<dynamic>(json);
+            var s = new Properties.Settings();
 
             //RS232
-            serialPort = key["RS232"]["SerialPort"];
-            baudRate = key["RS232"]["BaudRate"];
-            dataBits = key["RS232"]["DataBits"];
-            readTimeout = key["RS232"]["ReadTimeout"];
-            writeTimeout = key["RS232"]["WriteTimeout"];
-            dtrEnable = Convert.ToBoolean(key["RS232"]["DtrEnable"]);
-            rtsEnable = Convert.ToBoolean(key["RS232"]["RtsEnable"]);
+            serialPort = s.SerialPort;
+            baudRate = s.BaudRate;
+            dataBits = s.DataBits;
+            readTimeout = s.ReadTimeout;
+            writeTimeout = s.WriteTimeout;
+            dtrEnable = s.DtrEnable;
+            rtsEnable = s.RtsEnable;
 
             //App
-            if(debug = Convert.ToBoolean(key["App"]["Debug"]))
+            if(debug = s.Debug)
                 this.Text += " [Debug]";
-            regex = key["App"]["Regex"];
-        }
-
-        public static string getJson()
-        {
-            try
-            {
-                using (StreamReader sr = new StreamReader("instillinger.json"))
-                {
-                    string file = sr.ReadToEnd();
-                    return file;
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
-                return null;
-            }
+            regexPattern = s.Regex;
         }
 
         /// <summary>
@@ -106,9 +87,9 @@ namespace Analog
         private void countErrors()
         {
             if (feilTeller == 0)
-                populateGrid(feilTeller.ToString(), "feil funnet", 20, 20, 20, Color.YellowGreen); 
+                populateGrid(feilTeller.ToString(), "feil funnet", null, null, null, Color.YellowGreen); 
             else
-                populateGrid(feilTeller.ToString(), "feil funnet", 20, 20, 20, Color.Red);
+                populateGrid(feilTeller.ToString(), "feil funnet", null, null, null, Color.Red);
         }
 
 
@@ -151,7 +132,8 @@ namespace Analog
         /// <param name="input"></param>
         private void matchText(string input)
         {
-            Regex regex = new Regex(toolStripTextBox1.Text, RegexOptions.IgnoreCase);
+
+            var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
 
             string detektorAdresse;
             string detektorType;
@@ -169,14 +151,14 @@ namespace Analog
                 alarmGrense = convertToInt32(match.Groups[3].Value);        //int
                 analogvedi = convertToInt32(match.Groups[1].Value);         //int
 
-                if (analogvedi < numericUpDown1.Value || analogvedi > numericUpDown2.Value)
+                if (analogvedi < numericUpDown_Low.Value || analogvedi > numericUpDown_High.Value)
                 {
                     populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
                     feilTeller++;
                 }
             }
 
-            if (!checkBox1.Checked)
+            if (!checkBox_ShowAll.Checked)
                 countErrors();
         }
 
@@ -188,19 +170,19 @@ namespace Analog
         /// <param name="e"></param>
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked)
+            if (checkBox_ShowAll.Checked)
             {
-                numericUpDown1.Enabled = false;
-                numericUpDown2.Enabled = false;
-                numericUpDown1.Value = 99;
-                numericUpDown2.Value = 0;
+                numericUpDown_Low.Enabled = false;
+                numericUpDown_High.Enabled = false;
+                numericUpDown_Low.Value = 99;
+                numericUpDown_High.Value = 0;
             }
             else
             {
-                numericUpDown1.Enabled = true;
-                numericUpDown2.Enabled = true;
-                numericUpDown1.Value = 16;
-                numericUpDown2.Value = 30;
+                numericUpDown_Low.Enabled = true;
+                numericUpDown_High.Enabled = true;
+                numericUpDown_Low.Value = 16;
+                numericUpDown_High.Value = 30;
             }
         }
 
@@ -214,12 +196,12 @@ namespace Analog
         /// <param name="alarm"></param>
         /// <param name="analogverdi"></param>
         /// <param name="color"></param>
-        private void populateGrid(string addresse, string detektortype, int prealarm, int alarm, int analogverdi, Color color)
+        private void populateGrid(string addresse, string detektortype, int? prealarm, int? alarm, int? analogverdi, Color color)
         {
             DataGridViewRow row1 = (DataGridViewRow)dataGridView1.Rows[0].Clone();
 
-            row1.Cells[0].Value = addresse;     //loop+adress
-            row1.Cells[1].Value = detektortype; //type
+            row1.Cells[0].Value = addresse;             //loop+adress
+            row1.Cells[1].Value = detektortype;         //type
             row1.Cells[2].Value = prealarm;             //pre-al
             row1.Cells[3].Value = alarm;                //alarm
             row1.Cells[4].Value = analogverdi;          //value
@@ -307,7 +289,6 @@ namespace Analog
                             }
                         }
 
-
                         csvFileWriter.Flush();
                         csvFileWriter.Close();
                     }
@@ -350,7 +331,7 @@ namespace Analog
         {
             try
             {
-                mySerialPort = new SerialPort(textBox2.Text);
+                mySerialPort = new SerialPort(textBox_ComPort.Text);
 
                 mySerialPort.BaudRate = baudRate;
                 mySerialPort.Parity = Parity.None;
@@ -366,13 +347,13 @@ namespace Analog
                 mySerialPort.Open();
                 mySerialPort.DataReceived += DataReceivedHandler;
                 
-                textBox1.Text = "Klar!" + Environment.NewLine;
-                button1.Enabled = true;
-                button2.Text = "Stop";
+                textBox_RS232.Text = "Klar!" + Environment.NewLine;
+                button_Send.Enabled = true;
+                button_Start.Text = "Stop";
             }
             catch (Exception ex)
             {
-                textBox1.Text = ex.Message;
+                textBox_RS232.Text = ex.Message;
             }
         }
 
@@ -383,16 +364,16 @@ namespace Analog
                 //dataGridView1.Rows.Clear();
 
                 if(debug)
-                    MessageBox.Show(textBox1.Text);
+                    MessageBox.Show(textBox_RS232.Text);
                 
-                matchText(textBox1.Text);
+                matchText(textBox_RS232.Text);
                 mySerialPort.Close();
 
-                textBox1.Text = "Stoppet.. " + Environment.NewLine;
+                textBox_RS232.Text = "Stoppet.. " + Environment.NewLine;
             }
             catch (Exception ex)
             {
-                textBox1.Text = ex.Message;
+                textBox_RS232.Text = ex.Message;
             }
         }
 
@@ -406,12 +387,12 @@ namespace Analog
 
         private void DisplayToUI(string displayData)
         {
-            textBox1.Text += displayData;
+            textBox_RS232.Text += displayData;
             
             //scroll down
-            textBox1.SelectionStart = textBox1.Text.Length;
-            textBox1.ScrollToCaret();
-            textBox1.Refresh();
+            textBox_RS232.SelectionStart = textBox_RS232.Text.Length;
+            textBox_RS232.ScrollToCaret();
+            textBox_RS232.Refresh();
         }
 
         public void SendStringRS232(string msg)
@@ -452,37 +433,32 @@ namespace Analog
             }
             catch (Exception ex)
             {
-                textBox1.Text = ex.Message;
+                textBox_RS232.Text = ex.Message;
             }
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            SendStringRS232(textBox3.Text);
-            textBox3.Text = "";
+            SendStringRS232(textBox_Send.Text);
+            textBox_Send.Text = "";
         }
         private void button2_Click(object sender, EventArgs e)
         {
-            if (button2.Text == "Start")
+            if (button_Start.Text == "Start")
             {
                 StartRS232();
             }
             else
             {
                 StopRS232();
-                button1.Enabled = false;
-                button2.Text = "Start";
+                button_Send.Enabled = false;
+                button_Start.Text = "Start";
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-   
         }
 
         private void instillingerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string path = "notepad.exe \"" + Application.StartupPath + "\\instillinger.json\"";
-            //Process.Start(path);
+            Settings settings = new Settings();
+            settings.Show();
         }
 
     }
