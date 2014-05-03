@@ -1,6 +1,6 @@
 ﻿namespace Analog
 {
-    partial class Settings
+    partial class SettingsForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SettingsForm));
             this.button_Save = new System.Windows.Forms.Button();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
@@ -55,6 +56,9 @@
             this.textBox_Regex = new System.Windows.Forms.TextBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.button_Cancel = new System.Windows.Forms.Button();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.textBox_Version = new System.Windows.Forms.TextBox();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -64,17 +68,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_BaudRate)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button_Save
             // 
-            this.button_Save.Location = new System.Drawing.Point(381, 586);
+            this.button_Save.Location = new System.Drawing.Point(381, 460);
             this.button_Save.Name = "button_Save";
             this.button_Save.Size = new System.Drawing.Size(75, 23);
             this.button_Save.TabIndex = 2;
             this.button_Save.Text = "Lagre";
             this.button_Save.UseVisualStyleBackColor = true;
-            this.button_Save.Click += new System.EventHandler(this.button1_Click);
+            this.button_Save.Click += new System.EventHandler(this.button_Save_Click);
             // 
             // tabPage1
             // 
@@ -85,7 +91,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(441, 546);
+            this.tabPage1.Size = new System.Drawing.Size(441, 416);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Generelt";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -96,7 +102,7 @@
             this.groupBox3.Controls.Add(this.comboBox_Update);
             this.groupBox3.Controls.Add(this.label2);
             this.groupBox3.Controls.Add(this.label3);
-            this.groupBox3.Location = new System.Drawing.Point(22, 418);
+            this.groupBox3.Location = new System.Drawing.Point(14, 401);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(396, 107);
             this.groupBox3.TabIndex = 22;
@@ -116,6 +122,7 @@
             // 
             // comboBox_Update
             // 
+            this.comboBox_Update.Enabled = false;
             this.comboBox_Update.FormattingEnabled = true;
             this.comboBox_Update.Items.AddRange(new object[] {
             "True",
@@ -159,7 +166,7 @@
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(22, 107);
+            this.groupBox2.Location = new System.Drawing.Point(14, 90);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(396, 305);
             this.groupBox2.TabIndex = 21;
@@ -320,7 +327,7 @@
             // 
             this.groupBox1.Controls.Add(this.textBox2);
             this.groupBox1.Controls.Add(this.textBox_Regex);
-            this.groupBox1.Location = new System.Drawing.Point(22, 23);
+            this.groupBox1.Location = new System.Drawing.Point(14, 6);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(396, 76);
             this.groupBox1.TabIndex = 20;
@@ -347,33 +354,66 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Location = new System.Drawing.Point(11, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(449, 572);
+            this.tabControl1.Size = new System.Drawing.Size(449, 442);
             this.tabControl1.TabIndex = 4;
             // 
             // button_Cancel
             // 
-            this.button_Cancel.Location = new System.Drawing.Point(300, 586);
+            this.button_Cancel.Location = new System.Drawing.Point(300, 460);
             this.button_Cancel.Name = "button_Cancel";
             this.button_Cancel.Size = new System.Drawing.Size(75, 23);
             this.button_Cancel.TabIndex = 5;
             this.button_Cancel.Text = "Avbryt";
             this.button_Cancel.UseVisualStyleBackColor = true;
-            this.button_Cancel.Click += new System.EventHandler(this.button2_Click);
+            this.button_Cancel.Click += new System.EventHandler(this.button_Cancel_Click);
             // 
-            // Settings
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.groupBox4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(441, 416);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Om";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.textBox_Version);
+            this.groupBox4.Location = new System.Drawing.Point(22, 61);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(396, 51);
+            this.groupBox4.TabIndex = 21;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Versjon";
+            // 
+            // textBox_Version
+            // 
+            this.textBox_Version.Location = new System.Drawing.Point(12, 19);
+            this.textBox_Version.Name = "textBox_Version";
+            this.textBox_Version.ReadOnly = true;
+            this.textBox_Version.Size = new System.Drawing.Size(372, 20);
+            this.textBox_Version.TabIndex = 1;
+            // 
+            // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 615);
+            this.ClientSize = new System.Drawing.Size(470, 489);
             this.Controls.Add(this.button_Cancel);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_Save);
-            this.Name = "Settings";
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.Name = "SettingsForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Instillinger";
-            this.Load += new System.EventHandler(this.Settigs_Load);
             this.tabPage1.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
@@ -386,6 +426,9 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -419,5 +462,8 @@
         private System.Windows.Forms.TextBox textBox_Regex;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.Button button_Cancel;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.TextBox textBox_Version;
     }
 }

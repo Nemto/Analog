@@ -4,27 +4,40 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 
 namespace Analog
 {
-    public partial class Settings : Form
+    public partial class SettingsForm : Form
     {
         
-
-        public Settings()
+        public SettingsForm()
         {
             InitializeComponent();
+            LoadSettings();
         }
 
         Properties.Settings s = new Properties.Settings();
+        MainForm mainForm = new MainForm();
 
-        private void Settigs_Load(object sender, EventArgs e)
+        private void button_Save_Click(object sender, EventArgs e)
+        {
+            SaveSettings();
+            mainForm.restart();
+        }
+
+        private void button_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void LoadSettings()
         {
             // Regex
             textBox_Regex.Text = s.Regex;
-            
+
             // RS232
             textBox_COM.Text = s.SerialPort;
             numericUpDown_BaudRate.Value = s.BaudRate;
@@ -38,9 +51,11 @@ namespace Analog
             comboBox_Update.Text = s.Update.ToString();
             comboBox_Debug.Text = s.Debug.ToString();
 
+            // About
+            textBox_Version.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void SaveSettings()
         {
             s.Regex = textBox_Regex.Text;
 
@@ -53,14 +68,9 @@ namespace Analog
             s.RtsEnable = Convert.ToBoolean(comboBox_RTS.Text);
             s.Update = Convert.ToBoolean(comboBox_Update.Text);
             s.Debug = Convert.ToBoolean(comboBox_Debug.Text);
-            
+
             s.Save();
-            MessageBox.Show("Endringene er lagret!\nProgrammet må startes på nytt for at endringene skal tre i kraft.", "Informasjon");
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
     }
 }

@@ -145,13 +145,25 @@ namespace Analog.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("test123")]
-        public string SettingTest {
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int numericUpDown_High {
             get {
-                return ((string)(this["SettingTest"]));
+                return ((int)(this["numericUpDown_High"]));
             }
             set {
-                this["SettingTest"] = value;
+                this["numericUpDown_High"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
+        public int numericUpDown_Low {
+            get {
+                return ((int)(this["numericUpDown_Low"]));
+            }
+            set {
+                this["numericUpDown_Low"] = value;
             }
         }
     }

@@ -12,7 +12,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Web.Script.Serialization; //REF:System.Web.Ext
+using Analog.Classes;
 
 namespace Analog
 {
@@ -20,20 +20,20 @@ namespace Analog
     /// Kilder:
     /// http://stackoverflow.com/questions/5525181/find-each-regex-match-in-string
     /// http://stackoverflow.com/questions/5101217/rs232-serial-port-communication-c-sharp-win7-net-framework-3-5-sp1
+    /// http://www.iconarchive.com/show/mono-general-2-icons-by-custom-icon-design.html
     /// </summary>
     /// 
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
             deserializeSettings();
-            textBox_ComPort.Text = serialPort;
         }
         
 
         private int feilTeller;
-        private string versjon = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public string vesion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
        
         //instillinger
         private string regexPattern;
@@ -46,27 +46,10 @@ namespace Analog
         private bool dtrEnable;
         private bool rtsEnable;
 
-        /// <summary>
-        /// Tools
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        public static int convertToInt32(string input)
-        {
-            int numValue;
-            bool parsed = Int32.TryParse(input, out numValue);
-
-            if (!parsed)
-                MessageBox.Show(string.Format("Int32.TryParse could not parse '{0}' to an int.\n", input));
-
-            return numValue;
-        }
-
         public void deserializeSettings()
         {
             var s = new Properties.Settings();
 
-            //RS232
             serialPort = s.SerialPort;
             baudRate = s.BaudRate;
             dataBits = s.DataBits;
@@ -74,11 +57,15 @@ namespace Analog
             writeTimeout = s.WriteTimeout;
             dtrEnable = s.DtrEnable;
             rtsEnable = s.RtsEnable;
-
-            //App
-            if(debug = s.Debug)
-                this.Text += " [Debug]";
+            debug = s.Debug;
             regexPattern = s.Regex;
+            
+            if(debug)
+                this.Text += " [Debug]";
+
+            groupBox_RS232.Text += string.Format(" ({0})", serialPort);
+            numericUpDown_High.Value = s.numericUpDown_High;
+            numericUpDown_Low.Value = s.numericUpDown_Low;
         }
 
         /// <summary>
@@ -147,9 +134,9 @@ namespace Analog
 
                 detektorAdresse = match.Groups[4].Value + match.Groups[5].Value;
                 detektorType = match.Groups[6].Value.Replace("|", "ø");
-                forvarselGrense = convertToInt32(match.Groups[2].Value);    //int
-                alarmGrense = convertToInt32(match.Groups[3].Value);        //int
-                analogvedi = convertToInt32(match.Groups[1].Value);         //int
+                forvarselGrense = To.int32(match.Groups[2].Value);    //int
+                alarmGrense = To.int32(match.Groups[3].Value);        //int
+                analogvedi = To.int32(match.Groups[1].Value);         //int
 
                 if (analogvedi < numericUpDown_Low.Value || analogvedi > numericUpDown_High.Value)
                 {
@@ -306,17 +293,15 @@ namespace Analog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void hyperterminalToolStripMenuItem_Click(object sender, EventArgs e)
+
+        public void restart()
         {
-            MessageBox.Show("- Sett EEPROM 80D5 i OP til 01\n" +
-                            "- COM-port settes til 05-01-01\n\n" +
-                            "- Trykk på Start kappen i dette programmet.\n"+
-                            "- Trykk M:4:2:1:1:1:<velg sløyfe>:* for å starte utskrift.\n" +
-                            "- Når når utskriften er ferdig trykker du på Stopp knappen for å filtrere ut adresser med for høy/lav analog verdi.", "Oppsett");
+            Application.Restart();
         }
+
         private void omToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Versjon: " + versjon + "\nStian E.S", "Om M42111");
+            Process.Start("https://github.com/Nemto/Analog");
         }
 
 
@@ -331,7 +316,7 @@ namespace Analog
         {
             try
             {
-                mySerialPort = new SerialPort(textBox_ComPort.Text);
+                mySerialPort = new SerialPort(serialPort);
 
                 mySerialPort.BaudRate = baudRate;
                 mySerialPort.Parity = Parity.None;
@@ -401,34 +386,14 @@ namespace Analog
             {
                 if (debug)
                 {
-                    mySerialPort.WriteLine("ANALOGVERDI=14   FORVARSEL=45   ALARM=55\r\n");
-                    mySerialPort.WriteLine("ADR.:13.001 N|dlys                    90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
-                    mySerialPort.WriteLine("ANALOGVERDI=25   FORVARSEL=45   ALARM=55\r\n");
-                    mySerialPort.WriteLine("ADR.:13.002 N|dlys                    90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
-                    mySerialPort.WriteLine("ANALOGVERDI=00   FORVARSEL=45   ALARM=00\r\n");
-                    mySerialPort.WriteLine("ADR.:13.003 N|dlys                    90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
-                    mySerialPort.WriteLine("ANALOGVERDI=16   FORVARSEL=45   ALARM=55\r\n");
-                    mySerialPort.WriteLine("ADR.:13.004 N|dlys                    90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
-                    mySerialPort.WriteLine("ANALOGVERDI=38   FORVARSEL=45   ALARM=55\r\n");
-                    mySerialPort.WriteLine("ADR.:13.05 N|dlys                     90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
-                    mySerialPort.WriteLine("ANALOGVERDI=04   FORVARSEL=45   ALARM=55\r\n");
-                    mySerialPort.WriteLine("ADR.:1306 N|dlys                      90\r\n");
-                    mySerialPort.WriteLine("TID: 17.28                   DATO: 16/06\r\n");
-                    mySerialPort.WriteLine("---\r\n");
+                    foreach(var line in Classes.Debug.testPrint())
+                    {
+                        mySerialPort.Write(line);
+                    }
                 }
                 else
                 {
-                    mySerialPort.WriteLine(msg + "\r\n");
+                    mySerialPort.Write(msg + "\r\n");
                 }
             }
             catch (Exception ex)
@@ -436,12 +401,14 @@ namespace Analog
                 textBox_RS232.Text = ex.Message;
             }
         }
-        private void button1_Click(object sender, EventArgs e)
+
+        private void button_Send_Click(object sender, EventArgs e)
         {
             SendStringRS232(textBox_Send.Text);
             textBox_Send.Text = "";
         }
-        private void button2_Click(object sender, EventArgs e)
+
+        private void button_Start_Click(object sender, EventArgs e)
         {
             if (button_Start.Text == "Start")
             {
@@ -457,8 +424,43 @@ namespace Analog
 
         private void instillingerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Settings settings = new Settings();
+            SettingsForm settings = new SettingsForm();
             settings.Show();
+        }
+
+        //Save numericUpDown values
+        private void numericUpDown_High_ValueChanged(object sender, EventArgs e)
+        {
+            var s = new Properties.Settings();
+            if (numericUpDown_High.Value != 0)
+            {
+                s.numericUpDown_High = (int)numericUpDown_High.Value;
+                s.Save();
+            }
+        }
+
+        private void numericUpDown_Low_ValueChanged(object sender, EventArgs e)
+        {
+            var s = new Properties.Settings();
+            if (numericUpDown_Low.Value != 99)
+            {
+                s.numericUpDown_Low = (int)numericUpDown_Low.Value;
+                s.Save();
+            }
+        }
+
+        private void hyperterminalToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string fileName = "README.txt";
+            try
+            {
+                Process.Start(fileName);
+            }
+            catch
+            {
+                MessageBox.Show("Finner ikke filen README.txt", "Error");
+            }
+
         }
 
     }

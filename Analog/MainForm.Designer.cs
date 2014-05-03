@@ -1,6 +1,6 @@
 ﻿namespace Analog
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -57,7 +58,6 @@
             this.groupBox_RS232 = new System.Windows.Forms.GroupBox();
             this.textBox_Send = new System.Windows.Forms.TextBox();
             this.button_Send = new System.Windows.Forms.Button();
-            this.textBox_ComPort = new System.Windows.Forms.TextBox();
             this.textBox_RS232 = new System.Windows.Forms.TextBox();
             this.button_Start = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -78,12 +78,12 @@
             this.Column2,
             this.Column4,
             this.Column5});
-            this.dataGridView1.Location = new System.Drawing.Point(3, 32);
+            this.dataGridView1.Location = new System.Drawing.Point(6, 30);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.dataGridView1.Size = new System.Drawing.Size(363, 283);
+            this.dataGridView1.Size = new System.Drawing.Size(407, 283);
             this.dataGridView1.TabIndex = 1;
             // 
             // Column1
@@ -136,7 +136,7 @@
             this.hjelpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(369, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(418, 24);
             this.menuStrip1.TabIndex = 2;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -153,21 +153,21 @@
             // åpneFilToolStripMenuItem
             // 
             this.åpneFilToolStripMenuItem.Name = "åpneFilToolStripMenuItem";
-            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.åpneFilToolStripMenuItem.Text = "Åpne fil";
             this.åpneFilToolStripMenuItem.Click += new System.EventHandler(this.åpneFilToolStripMenuItem_Click);
             // 
             // tømVinduToolStripMenuItem
             // 
             this.tømVinduToolStripMenuItem.Name = "tømVinduToolStripMenuItem";
-            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.tømVinduToolStripMenuItem.Text = "Tøm vindu";
             this.tømVinduToolStripMenuItem.Click += new System.EventHandler(this.tømVinduToolStripMenuItem_Click);
             // 
             // lagreSomToolStripMenuItem
             // 
             this.lagreSomToolStripMenuItem.Name = "lagreSomToolStripMenuItem";
-            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.lagreSomToolStripMenuItem.Text = "Lagre som..";
             this.lagreSomToolStripMenuItem.Click += new System.EventHandler(this.lagreSomToolStripMenuItem_Click);
             // 
@@ -220,10 +220,10 @@
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel1,
             this.toolStripSeparator1});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 461);
+            this.toolStrip1.Location = new System.Drawing.Point(0, 514);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.toolStrip1.Size = new System.Drawing.Size(369, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(418, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
             // 
@@ -241,7 +241,7 @@
             // checkBox_ShowAll
             // 
             this.checkBox_ShowAll.AutoSize = true;
-            this.checkBox_ShowAll.Location = new System.Drawing.Point(262, 18);
+            this.checkBox_ShowAll.Location = new System.Drawing.Point(306, 18);
             this.checkBox_ShowAll.Name = "checkBox_ShowAll";
             this.checkBox_ShowAll.Size = new System.Drawing.Size(94, 17);
             this.checkBox_ShowAll.TabIndex = 6;
@@ -260,11 +260,7 @@
             this.numericUpDown_Low.Name = "numericUpDown_Low";
             this.numericUpDown_Low.Size = new System.Drawing.Size(46, 20);
             this.numericUpDown_Low.TabIndex = 7;
-            this.numericUpDown_Low.Value = new decimal(new int[] {
-            16,
-            0,
-            0,
-            0});
+            this.numericUpDown_Low.ValueChanged += new System.EventHandler(this.numericUpDown_Low_ValueChanged);
             // 
             // numericUpDown_High
             // 
@@ -272,11 +268,7 @@
             this.numericUpDown_High.Name = "numericUpDown_High";
             this.numericUpDown_High.Size = new System.Drawing.Size(46, 20);
             this.numericUpDown_High.TabIndex = 8;
-            this.numericUpDown_High.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
+            this.numericUpDown_High.ValueChanged += new System.EventHandler(this.numericUpDown_High_ValueChanged);
             // 
             // label1
             // 
@@ -303,9 +295,9 @@
             this.groupBox_Settings.Controls.Add(this.label2);
             this.groupBox_Settings.Controls.Add(this.numericUpDown_Low);
             this.groupBox_Settings.Controls.Add(this.label1);
-            this.groupBox_Settings.Location = new System.Drawing.Point(3, 321);
+            this.groupBox_Settings.Location = new System.Drawing.Point(6, 319);
             this.groupBox_Settings.Name = "groupBox_Settings";
-            this.groupBox_Settings.Size = new System.Drawing.Size(363, 45);
+            this.groupBox_Settings.Size = new System.Drawing.Size(407, 45);
             this.groupBox_Settings.TabIndex = 11;
             this.groupBox_Settings.TabStop = false;
             this.groupBox_Settings.Text = "Analogverdi";
@@ -314,68 +306,61 @@
             // 
             this.groupBox_RS232.Controls.Add(this.textBox_Send);
             this.groupBox_RS232.Controls.Add(this.button_Send);
-            this.groupBox_RS232.Controls.Add(this.textBox_ComPort);
             this.groupBox_RS232.Controls.Add(this.textBox_RS232);
             this.groupBox_RS232.Controls.Add(this.button_Start);
-            this.groupBox_RS232.Location = new System.Drawing.Point(3, 372);
+            this.groupBox_RS232.Location = new System.Drawing.Point(6, 370);
             this.groupBox_RS232.Name = "groupBox_RS232";
-            this.groupBox_RS232.Size = new System.Drawing.Size(363, 86);
+            this.groupBox_RS232.Size = new System.Drawing.Size(407, 135);
             this.groupBox_RS232.TabIndex = 13;
             this.groupBox_RS232.TabStop = false;
             this.groupBox_RS232.Text = "RS232";
             // 
             // textBox_Send
             // 
-            this.textBox_Send.Location = new System.Drawing.Point(7, 59);
+            this.textBox_Send.Location = new System.Drawing.Point(7, 107);
             this.textBox_Send.Name = "textBox_Send";
-            this.textBox_Send.Size = new System.Drawing.Size(264, 20);
+            this.textBox_Send.Size = new System.Drawing.Size(222, 20);
             this.textBox_Send.TabIndex = 9;
             // 
             // button_Send
             // 
             this.button_Send.Enabled = false;
-            this.button_Send.Location = new System.Drawing.Point(277, 57);
+            this.button_Send.Location = new System.Drawing.Point(235, 105);
             this.button_Send.Name = "button_Send";
             this.button_Send.Size = new System.Drawing.Size(80, 23);
             this.button_Send.TabIndex = 8;
             this.button_Send.Text = "Send";
             this.button_Send.UseVisualStyleBackColor = true;
-            this.button_Send.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // textBox_ComPort
-            // 
-            this.textBox_ComPort.Location = new System.Drawing.Point(277, 14);
-            this.textBox_ComPort.Name = "textBox_ComPort";
-            this.textBox_ComPort.Size = new System.Drawing.Size(79, 20);
-            this.textBox_ComPort.TabIndex = 7;
-            this.textBox_ComPort.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.button_Send.Click += new System.EventHandler(this.button_Send_Click);
             // 
             // textBox_RS232
             // 
-            this.textBox_RS232.Font = new System.Drawing.Font("Courier New", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox_RS232.Location = new System.Drawing.Point(7, 14);
+            this.textBox_RS232.BackColor = System.Drawing.SystemColors.HighlightText;
+            this.textBox_RS232.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox_RS232.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox_RS232.Location = new System.Drawing.Point(7, 19);
             this.textBox_RS232.Multiline = true;
             this.textBox_RS232.Name = "textBox_RS232";
+            this.textBox_RS232.ReadOnly = true;
             this.textBox_RS232.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox_RS232.Size = new System.Drawing.Size(264, 42);
+            this.textBox_RS232.Size = new System.Drawing.Size(394, 84);
             this.textBox_RS232.TabIndex = 6;
-            this.textBox_RS232.Text = "~ log ~";
             // 
             // button_Start
             // 
-            this.button_Start.Location = new System.Drawing.Point(277, 34);
+            this.button_Start.Location = new System.Drawing.Point(321, 105);
             this.button_Start.Name = "button_Start";
             this.button_Start.Size = new System.Drawing.Size(80, 23);
             this.button_Start.TabIndex = 5;
             this.button_Start.Text = "Start";
             this.button_Start.UseVisualStyleBackColor = true;
-            this.button_Start.Click += new System.EventHandler(this.button2_Click);
+            this.button_Start.Click += new System.EventHandler(this.button_Start_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(369, 486);
+            this.ClientSize = new System.Drawing.Size(418, 539);
             this.Controls.Add(this.groupBox_RS232);
             this.Controls.Add(this.groupBox_Settings);
             this.Controls.Add(this.toolStrip1);
@@ -383,9 +368,10 @@
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.Text = "Analog";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -434,7 +420,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.TextBox textBox_RS232;
         private System.Windows.Forms.ToolStripMenuItem tømVinduToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox_ComPort;
         private System.Windows.Forms.TextBox textBox_Send;
         private System.Windows.Forms.Button button_Send;
         private System.Windows.Forms.ToolStripMenuItem instillingerToolStripMenuItem;
