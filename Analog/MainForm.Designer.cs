@@ -47,14 +47,13 @@
             this.omToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
-            this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.checkBox_ShowAll = new System.Windows.Forms.CheckBox();
             this.numericUpDown_Low = new System.Windows.Forms.NumericUpDown();
             this.numericUpDown_High = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox_Settings = new System.Windows.Forms.GroupBox();
+            this.checkBox_Quad = new System.Windows.Forms.CheckBox();
             this.groupBox_RS232 = new System.Windows.Forms.GroupBox();
             this.textBox_Send = new System.Windows.Forms.TextBox();
             this.button_Send = new System.Windows.Forms.Button();
@@ -62,7 +61,6 @@
             this.button_Start = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
-            this.toolStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Low)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_High)).BeginInit();
             this.groupBox_Settings.SuspendLayout();
@@ -192,7 +190,7 @@
             this.eEPROMSetupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hyperterminalToolStripMenuItem});
             this.eEPROMSetupToolStripMenuItem.Name = "eEPROMSetupToolStripMenuItem";
-            this.eEPROMSetupToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.eEPROMSetupToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.eEPROMSetupToolStripMenuItem.Text = "Oppsett";
             // 
             // hyperterminalToolStripMenuItem
@@ -200,12 +198,12 @@
             this.hyperterminalToolStripMenuItem.Name = "hyperterminalToolStripMenuItem";
             this.hyperterminalToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.hyperterminalToolStripMenuItem.Text = "Delta DA/ANX95";
-            this.hyperterminalToolStripMenuItem.Click += new System.EventHandler(this.hyperterminalToolStripMenuItem_Click);
+            this.hyperterminalToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
             // omToolStripMenuItem
             // 
             this.omToolStripMenuItem.Name = "omToolStripMenuItem";
-            this.omToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.omToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.omToolStripMenuItem.Text = "Om M42111..";
             this.omToolStripMenuItem.Click += new System.EventHandler(this.omToolStripMenuItem_Click);
             // 
@@ -217,26 +215,12 @@
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripLabel1,
-            this.toolStripSeparator1});
             this.toolStrip1.Location = new System.Drawing.Point(0, 514);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
             this.toolStrip1.Size = new System.Drawing.Size(418, 25);
             this.toolStrip1.TabIndex = 4;
             this.toolStrip1.Text = "toolStrip1";
-            // 
-            // toolStripLabel1
-            // 
-            this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(42, 22);
-            this.toolStripLabel1.Text = "Status:";
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // checkBox_ShowAll
             // 
@@ -247,7 +231,7 @@
             this.checkBox_ShowAll.TabIndex = 6;
             this.checkBox_ShowAll.Text = "Vis alle verdier";
             this.checkBox_ShowAll.UseVisualStyleBackColor = true;
-            this.checkBox_ShowAll.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            this.checkBox_ShowAll.CheckedChanged += new System.EventHandler(this.checkBox_ShowAll_CheckedChanged);
             // 
             // numericUpDown_Low
             // 
@@ -290,6 +274,7 @@
             // 
             // groupBox_Settings
             // 
+            this.groupBox_Settings.Controls.Add(this.checkBox_Quad);
             this.groupBox_Settings.Controls.Add(this.numericUpDown_High);
             this.groupBox_Settings.Controls.Add(this.checkBox_ShowAll);
             this.groupBox_Settings.Controls.Add(this.label2);
@@ -301,6 +286,17 @@
             this.groupBox_Settings.TabIndex = 11;
             this.groupBox_Settings.TabStop = false;
             this.groupBox_Settings.Text = "Analogverdi";
+            // 
+            // checkBox_Quad
+            // 
+            this.checkBox_Quad.AutoSize = true;
+            this.checkBox_Quad.Location = new System.Drawing.Point(235, 18);
+            this.checkBox_Quad.Name = "checkBox_Quad";
+            this.checkBox_Quad.Size = new System.Drawing.Size(52, 17);
+            this.checkBox_Quad.TabIndex = 11;
+            this.checkBox_Quad.Text = "Quad";
+            this.checkBox_Quad.UseVisualStyleBackColor = true;
+            this.checkBox_Quad.CheckedChanged += new System.EventHandler(this.checkBox_Quad_CheckedChanged);
             // 
             // groupBox_RS232
             // 
@@ -377,8 +373,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Low)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_High)).EndInit();
             this.groupBox_Settings.ResumeLayout(false);
@@ -399,9 +393,7 @@
         private System.Windows.Forms.ToolStripMenuItem hyperterminalToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.ToolStrip toolStrip1;
-        private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripMenuItem omToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem filToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lagreSomToolStripMenuItem;
         private System.Windows.Forms.CheckBox checkBox_ShowAll;
@@ -413,16 +405,17 @@
         private System.Windows.Forms.GroupBox groupBox_RS232;
         private System.Windows.Forms.Button button_Start;
         private System.Windows.Forms.ToolStripMenuItem åpneFilToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.TextBox textBox_RS232;
         private System.Windows.Forms.ToolStripMenuItem tømVinduToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox_Send;
         private System.Windows.Forms.Button button_Send;
         private System.Windows.Forms.ToolStripMenuItem instillingerToolStripMenuItem;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.CheckBox checkBox_Quad;
     }
 }
 

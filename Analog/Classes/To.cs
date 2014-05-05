@@ -7,13 +7,13 @@ namespace Analog.Classes
 {
     class To
     {
-        public static int int32(string input)
+        public static int? int32(string input)
         {
             int numValue;
             bool parsed = Int32.TryParse(input, out numValue);
 
             if (!parsed)
-                return 0;
+                return null;
 
             return numValue;
         }

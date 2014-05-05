@@ -3,16 +3,16 @@
   <Profiles />
   <Settings>
     <Setting Name="Regex" Type="System.String" Scope="User">
-      <Value Profile="(Default)">\w+=(\d+)\s+\w+=(\d+)\s+\w+=(\d+)\r\n\w+.:(\d{2}.?)(\d{2,3})\s+(\w+\|?\s?\w+?)\s</Value>
+      <Value Profile="(Default)">(\w{11}=|\w{16}:.)(\d{2})\s+(\w{9}=(\d{2})\s+\w{5}=(\d{2})|\w{7}).*?(\n|\r\n)\w+.:(\d{2}.?)(\d{2,3})\s+(\w+\|?\s?\w+?)\s</Value>
     </Setting>
     <Setting Name="Update" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Debug" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="SerialPort" Type="System.String" Scope="User">
-      <Value Profile="(Default)">COM1</Value>
+      <Value Profile="(Default)">COM3</Value>
     </Setting>
     <Setting Name="BaudRate" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9600</Value>

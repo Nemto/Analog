@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Analog.Classes;
+using System.Threading;
 
 namespace Analog
 {
@@ -67,6 +68,13 @@ namespace Analog
             numericUpDown_High.Value = s.numericUpDown_High;
             numericUpDown_Low.Value = s.numericUpDown_Low;
         }
+        
+        // Restart
+        public void restart()
+        {
+            Application.Restart();
+        }
+
 
         /// <summary>
         /// Feilteller
@@ -74,9 +82,9 @@ namespace Analog
         private void countErrors()
         {
             if (feilTeller == 0)
-                populateGrid(feilTeller.ToString(), "feil funnet", null, null, null, Color.YellowGreen); 
+                populateGrid(feilTeller.ToString(), "feil funnet.", null, null, null, Color.YellowGreen); 
             else
-                populateGrid(feilTeller.ToString(), "feil funnet", null, null, null, Color.Red);
+                populateGrid(feilTeller.ToString(), "feil funnet.", null, null, null, Color.Red);
         }
 
 
@@ -119,25 +127,25 @@ namespace Analog
         /// <param name="input"></param>
         private void matchText(string input)
         {
-
             var regex = new Regex(regexPattern, RegexOptions.IgnoreCase);
 
             string detektorAdresse;
             string detektorType;
-            int forvarselGrense;
-            int alarmGrense;
-            int analogvedi;
-  
+            int? forvarselGrense;
+            int? alarmGrense;
+            int? analogvedi;
 
             foreach (Match match in regex.Matches(input))
             {
+                detektorAdresse = match.Groups[7].Value + match.Groups[8].Value;
+                detektorType = match.Groups[9].Value.Replace("|", "ø");
+                forvarselGrense = To.int32(match.Groups[4].Value);
+                alarmGrense = To.int32(match.Groups[5].Value);
+                analogvedi = To.int32(match.Groups[2].Value);
 
-                detektorAdresse = match.Groups[4].Value + match.Groups[5].Value;
-                detektorType = match.Groups[6].Value.Replace("|", "ø");
-                forvarselGrense = To.int32(match.Groups[2].Value);    //int
-                alarmGrense = To.int32(match.Groups[3].Value);        //int
-                analogvedi = To.int32(match.Groups[1].Value);         //int
+                //Todo: Prevent logging of deactivated detectors
 
+                // Send bad values to gridview
                 if (analogvedi < numericUpDown_Low.Value || analogvedi > numericUpDown_High.Value)
                 {
                     populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
@@ -155,8 +163,11 @@ namespace Analog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        private void checkBox_ShowAll_CheckedChanged(object sender, EventArgs e)
         {
+            //need fix
+            checkBox_Quad.Checked = false;
+
             if (checkBox_ShowAll.Checked)
             {
                 numericUpDown_Low.Enabled = false;
@@ -168,14 +179,36 @@ namespace Analog
             {
                 numericUpDown_Low.Enabled = true;
                 numericUpDown_High.Enabled = true;
-                numericUpDown_Low.Value = 16;
-                numericUpDown_High.Value = 30;
+                numericUpDown_Low.Value = Properties.Settings.Default.numericUpDown_Low;
+                numericUpDown_High.Value = Properties.Settings.Default.numericUpDown_High;
             }
         }
 
+        private void checkBox_Quad_CheckedChanged(object sender, EventArgs e)
+        {
+            //need fix
+            checkBox_ShowAll.Checked = false;
+            
+            if (checkBox_Quad.Checked)
+            {
+                label1.Text = "(eller mindre)";
+                numericUpDown_High.Enabled = false;
+                numericUpDown_Low.Value = 50;
+                numericUpDown_High.Value = 0;
+                numericUpDown_High.Visible = false;
+            }
+            else
+            {
+                label1.Text = "-";
+                numericUpDown_High.Enabled = true;
+                numericUpDown_Low.Value = Properties.Settings.Default.numericUpDown_Low;
+                numericUpDown_High.Value = Properties.Settings.Default.numericUpDown_High;
+                numericUpDown_High.Visible = true;
+            }
+        }
 
         /// <summary>
-        /// Sett in i Datagrid
+        /// Insert to datagridview
         /// </summary>
         /// <param name="addresse"></param>
         /// <param name="detektortype"></param>
@@ -194,11 +227,11 @@ namespace Analog
             row1.Cells[4].Value = analogverdi;          //value
             row1.DefaultCellStyle.BackColor = color;    //rowcolor
 
-            // make row grey if alarm is 99 or 0
+            // Paint it gray row grey if alarm is 99 or 0
             if (alarm == 0 || alarm == 99)
             {
                 row1.DefaultCellStyle.BackColor = Color.LightGray;
-                row1.Cells[1].Value += " (fjernet?)";
+                row1.Cells[1].Value = "ALARM GRENSE = " + alarm;
             }
 
             dataGridView1.Rows.Add(row1);
@@ -293,17 +326,33 @@ namespace Analog
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-
-        public void restart()
-        {
-            Application.Restart();
-        }
-
         private void omToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/Nemto/Analog");
         }
 
+        private void numericUpDown_Low_ValueChanged(object sender, EventArgs e)
+        {
+            var s = new Properties.Settings();
+            if (numericUpDown_Low.Value != 99 && !checkBox_Quad.Checked)
+            {
+                s.numericUpDown_Low = (int)numericUpDown_Low.Value;
+                s.Save();
+            }
+        }
+
+        private void helpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string fileName = "README.txt";
+            try
+            {
+                Process.Start(fileName);
+            }
+            catch
+            {
+                MessageBox.Show("Finner ikke filen README.txt", "Error");
+            }
+        }
 
         /// <summary>
         /// RS232
@@ -346,7 +395,6 @@ namespace Analog
         {
             try
             {
-                //dataGridView1.Rows.Clear();
 
                 if(debug)
                     MessageBox.Show(textBox_RS232.Text);
@@ -354,7 +402,7 @@ namespace Analog
                 matchText(textBox_RS232.Text);
                 mySerialPort.Close();
 
-                textBox_RS232.Text = "Stoppet.. " + Environment.NewLine;
+                textBox_RS232.Text = "Stoppet. " + Environment.NewLine;
             }
             catch (Exception ex)
             {
@@ -365,7 +413,7 @@ namespace Analog
         public void DataReceivedHandler(object sender, SerialDataReceivedEventArgs e)
         {
             SerialPort sp = (SerialPort)sender;
-            System.Threading.Thread.Sleep(500);
+            Thread.Sleep(500);
             string indata = sp.ReadExisting();
             this.BeginInvoke(new SetTextDeleg(DisplayToUI), new object[] { indata });
         }
@@ -374,7 +422,7 @@ namespace Analog
         {
             textBox_RS232.Text += displayData;
             
-            //scroll down
+            // Scroll down
             textBox_RS232.SelectionStart = textBox_RS232.Text.Length;
             textBox_RS232.ScrollToCaret();
             textBox_RS232.Refresh();
@@ -384,9 +432,17 @@ namespace Analog
         {
             try
             {
+                // If debug is true then send test log insted
                 if (debug)
                 {
-                    foreach(var line in Classes.Debug.testPrint())
+                    // Write test log for DA systems
+                    foreach (var line in Testing.daLog())
+                    {
+                        mySerialPort.Write(line);
+                    }
+
+                    // Write test log for DA Quad systems
+                    foreach (var line in Testing.daqLog())
                     {
                         mySerialPort.Write(line);
                     }
@@ -432,36 +488,11 @@ namespace Analog
         private void numericUpDown_High_ValueChanged(object sender, EventArgs e)
         {
             var s = new Properties.Settings();
-            if (numericUpDown_High.Value != 0)
+            if (numericUpDown_High.Value != 0 && !checkBox_Quad.Checked)
             {
                 s.numericUpDown_High = (int)numericUpDown_High.Value;
                 s.Save();
             }
         }
-
-        private void numericUpDown_Low_ValueChanged(object sender, EventArgs e)
-        {
-            var s = new Properties.Settings();
-            if (numericUpDown_Low.Value != 99)
-            {
-                s.numericUpDown_Low = (int)numericUpDown_Low.Value;
-                s.Save();
-            }
-        }
-
-        private void hyperterminalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string fileName = "README.txt";
-            try
-            {
-                Process.Start(fileName);
-            }
-            catch
-            {
-                MessageBox.Show("Finner ikke filen README.txt", "Error");
-            }
-
-        }
-
     }
 }

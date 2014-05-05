@@ -25,7 +25,8 @@ namespace Analog.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\\w+=(\\d+)\\s+\\w+=(\\d+)\\s+\\w+=(\\d+)\\r\\n\\w+.:(\\d{2}.?)(\\d{2,3})\\s+(\\w+\\|?\\s?\\w+?)\\s")]
+        [global::System.Configuration.DefaultSettingValueAttribute("(\\w{11}=|\\w{16}:.)(\\d{2})\\s+(\\w{9}=(\\d{2})\\s+\\w{5}=(\\d{2})|\\w{7}).*?(\\n|\\r\\n)\\w+." +
+            ":(\\d{2}.?)(\\d{2,3})\\s+(\\w+\\|?\\s?\\w+?)\\s")]
         public string Regex {
             get {
                 return ((string)(this["Regex"]));
@@ -49,7 +50,7 @@ namespace Analog.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool Debug {
             get {
                 return ((bool)(this["Debug"]));
@@ -61,7 +62,7 @@ namespace Analog.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("COM1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("COM3")]
         public string SerialPort {
             get {
                 return ((string)(this["SerialPort"]));
