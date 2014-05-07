@@ -43,6 +43,7 @@ namespace Analog
         private int dataBits;
         private int readTimeout;
         private int writeTimeout;
+        private bool isIQ8;
         private bool debug;
         private bool dtrEnable;
         private bool rtsEnable;
@@ -142,6 +143,9 @@ namespace Analog
                 forvarselGrense = To.int32(match.Groups[4].Value);
                 alarmGrense = To.int32(match.Groups[5].Value);
                 analogvedi = To.int32(match.Groups[2].Value);
+                
+                if (match.Groups[3].Value == "PROSENT")
+                    detektorType = "[IQ8] " + detektorType;
 
                 //Todo: Prevent logging of deactivated detectors
 
