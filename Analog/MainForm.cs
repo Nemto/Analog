@@ -145,11 +145,24 @@ namespace Analog
 
                 //Todo: Prevent logging of deactivated detectors
 
-                // Send bad values to gridview
-                if (analogvedi < numericUpDown_Low.Value || analogvedi > numericUpDown_High.Value)
+                // Send bad apollo values to gridview
+                if (!checkBox_Quad.Checked)
                 {
-                    populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
-                    feilTeller++;
+                    if (analogvedi < numericUpDown_Low.Value || analogvedi > numericUpDown_High.Value)
+                    {
+                        populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
+                        feilTeller++;
+                    }
+                }
+
+                // Send bad quad values to gridview
+                if (checkBox_Quad.Checked)
+                {
+                    if(analogvedi > numericUpDown_Low.Value)
+                    {
+                        populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
+                        feilTeller++;
+                    }
                 }
             }
 
@@ -157,7 +170,6 @@ namespace Analog
                 countErrors();
         }
 
-        
         /// <summary>
         /// Vis alle verdier
         /// </summary>
@@ -165,11 +177,10 @@ namespace Analog
         /// <param name="e"></param>
         private void checkBox_ShowAll_CheckedChanged(object sender, EventArgs e)
         {
-            //need fix
-            checkBox_Quad.Checked = false;
-
             if (checkBox_ShowAll.Checked)
             {
+                groupBox_Settings.Text = "Analogverdi/Nedsmussingsgrad";
+                checkBox_Quad.Checked = false;
                 numericUpDown_Low.Enabled = false;
                 numericUpDown_High.Enabled = false;
                 numericUpDown_Low.Value = 99;
@@ -177,6 +188,7 @@ namespace Analog
             }
             else
             {
+                groupBox_Settings.Text = "Analogverdi";
                 numericUpDown_Low.Enabled = true;
                 numericUpDown_High.Enabled = true;
                 numericUpDown_Low.Value = Properties.Settings.Default.numericUpDown_Low;
@@ -186,12 +198,11 @@ namespace Analog
 
         private void checkBox_Quad_CheckedChanged(object sender, EventArgs e)
         {
-            //need fix
-            checkBox_ShowAll.Checked = false;
-            
             if (checkBox_Quad.Checked)
             {
-                label1.Text = "(eller mindre)";
+                checkBox_ShowAll.Checked = false;
+                groupBox_Settings.Text = "Nedsmussingsgrad";
+                label1.Text = "% (eller mindre)";
                 numericUpDown_High.Enabled = false;
                 numericUpDown_Low.Value = 50;
                 numericUpDown_High.Value = 0;
@@ -199,6 +210,7 @@ namespace Analog
             }
             else
             {
+                groupBox_Settings.Text = "Analogverdi";
                 label1.Text = "-";
                 numericUpDown_High.Enabled = true;
                 numericUpDown_Low.Value = Properties.Settings.Default.numericUpDown_Low;
@@ -494,5 +506,7 @@ namespace Analog
                 s.Save();
             }
         }
+
+
     }
 }
