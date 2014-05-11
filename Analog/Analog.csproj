@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="Classes\Testing.cs" />
     <Compile Include="Classes\To.cs" />
+    <Compile Include="Classes\Upgrade.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

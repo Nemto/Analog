@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Analog.Classes;
 using System.Threading;
+using System.Net;
 
 namespace Analog
 {
@@ -43,10 +44,10 @@ namespace Analog
         private int dataBits;
         private int readTimeout;
         private int writeTimeout;
-        private bool isIQ8;
         private bool debug;
         private bool dtrEnable;
         private bool rtsEnable;
+        private bool aUpdate;
 
         public void deserializeSettings()
         {
@@ -61,6 +62,7 @@ namespace Analog
             rtsEnable = s.RtsEnable;
             debug = s.Debug;
             regexPattern = s.Regex;
+            aUpdate = s.Update;
             
             if(debug)
                 this.Text += " [Debug]";
@@ -68,8 +70,30 @@ namespace Analog
             groupBox_RS232.Text += string.Format(" ({0})", serialPort);
             numericUpDown_High.Value = s.numericUpDown_High;
             numericUpDown_Low.Value = s.numericUpDown_Low;
+
+            //check for updates if enabled
+            if (aUpdate)
+                lastRelease(false);
         }
-        
+
+        public void lastRelease(bool showFalse)
+        {
+            string url = "https://github.com/Nemto/Analog/releases";
+
+            if (Upgrade.Needed(vesion))
+            {
+                if (MessageBox.Show("En ny oppdatering er tilgjengelig!\n Vil du laste ned nå?\n\n" + url, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Process.Start(url);
+                }
+            }
+            else
+            {
+                if (showFalse)
+                    MessageBox.Show("Ingen nye oppdateringer.");
+            }
+        }
+
         // Restart
         public void restart()
         {
@@ -370,6 +394,11 @@ namespace Analog
             }
         }
 
+        private void erDetteNyesteVersjonToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            lastRelease(true);
+        }
+
         /// <summary>
         /// RS232
         /// </summary>
@@ -510,7 +539,6 @@ namespace Analog
                 s.Save();
             }
         }
-
 
     }
 }

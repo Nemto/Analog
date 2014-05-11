@@ -20,11 +20,13 @@ namespace Analog
         }
 
         Properties.Settings s = new Properties.Settings();
-        MainForm mainForm = new MainForm();
+
 
         private void button_Save_Click(object sender, EventArgs e)
         {
             SaveSettings();
+
+            var mainForm = new MainForm();
             mainForm.restart();
         }
 

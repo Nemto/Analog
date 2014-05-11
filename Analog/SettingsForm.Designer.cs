@@ -122,7 +122,6 @@
             // 
             // comboBox_Update
             // 
-            this.comboBox_Update.Enabled = false;
             this.comboBox_Update.FormattingEnabled = true;
             this.comboBox_Update.Items.AddRange(new object[] {
             "True",

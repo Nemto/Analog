@@ -44,6 +44,7 @@
             this.hjelpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eEPROMSetupToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.hyperterminalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.erDetteNyesteVersjonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.omToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
@@ -180,6 +181,7 @@
             // 
             this.hjelpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.eEPROMSetupToolStripMenuItem,
+            this.erDetteNyesteVersjonToolStripMenuItem,
             this.omToolStripMenuItem});
             this.hjelpToolStripMenuItem.Name = "hjelpToolStripMenuItem";
             this.hjelpToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
@@ -190,7 +192,7 @@
             this.eEPROMSetupToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.hyperterminalToolStripMenuItem});
             this.eEPROMSetupToolStripMenuItem.Name = "eEPROMSetupToolStripMenuItem";
-            this.eEPROMSetupToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.eEPROMSetupToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.eEPROMSetupToolStripMenuItem.Text = "Oppsett";
             // 
             // hyperterminalToolStripMenuItem
@@ -200,10 +202,17 @@
             this.hyperterminalToolStripMenuItem.Text = "Delta DA/ANX95";
             this.hyperterminalToolStripMenuItem.Click += new System.EventHandler(this.helpToolStripMenuItem_Click);
             // 
+            // erDetteNyesteVersjonToolStripMenuItem
+            // 
+            this.erDetteNyesteVersjonToolStripMenuItem.Name = "erDetteNyesteVersjonToolStripMenuItem";
+            this.erDetteNyesteVersjonToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
+            this.erDetteNyesteVersjonToolStripMenuItem.Text = "Er dette nyeste versjon?";
+            this.erDetteNyesteVersjonToolStripMenuItem.Click += new System.EventHandler(this.erDetteNyesteVersjonToolStripMenuItem_Click);
+            // 
             // omToolStripMenuItem
             // 
             this.omToolStripMenuItem.Name = "omToolStripMenuItem";
-            this.omToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.omToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
             this.omToolStripMenuItem.Text = "Om M42111..";
             this.omToolStripMenuItem.Click += new System.EventHandler(this.omToolStripMenuItem_Click);
             // 
@@ -416,6 +425,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.CheckBox checkBox_Quad;
+        private System.Windows.Forms.ToolStripMenuItem erDetteNyesteVersjonToolStripMenuItem;
     }
 }
 
