@@ -178,9 +178,9 @@
             this.comboBox_Debug.Items.AddRange(new object[] {
             "True",
             "False"});
-            this.comboBox_Debug.Location = new System.Drawing.Point(12, 76);
+            this.comboBox_Debug.Location = new System.Drawing.Point(13, 76);
             this.comboBox_Debug.Name = "comboBox_Debug";
-            this.comboBox_Debug.Size = new System.Drawing.Size(372, 21);
+            this.comboBox_Debug.Size = new System.Drawing.Size(371, 21);
             this.comboBox_Debug.TabIndex = 24;
             // 
             // tabPage1

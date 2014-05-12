@@ -39,12 +39,12 @@ namespace Analog.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool Update {
+        public bool AutoUpdate {
             get {
-                return ((bool)(this["Update"]));
+                return ((bool)(this["AutoUpdate"]));
             }
             set {
-                this["Update"] = value;
+                this["AutoUpdate"] = value;
             }
         }
         
@@ -147,24 +147,24 @@ namespace Analog.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public int numericUpDown_High {
+        public int NumericUpDown_High {
             get {
-                return ((int)(this["numericUpDown_High"]));
+                return ((int)(this["NumericUpDown_High"]));
             }
             set {
-                this["numericUpDown_High"] = value;
+                this["NumericUpDown_High"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("16")]
-        public int numericUpDown_Low {
+        public int NumericUpDown_Low {
             get {
-                return ((int)(this["numericUpDown_Low"]));
+                return ((int)(this["NumericUpDown_Low"]));
             }
             set {
-                this["numericUpDown_Low"] = value;
+                this["NumericUpDown_Low"] = value;
             }
         }
     }

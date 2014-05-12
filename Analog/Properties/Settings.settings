@@ -5,7 +5,7 @@
     <Setting Name="Regex" Type="System.String" Scope="User">
       <Value Profile="(Default)">(\w{11}=|\w{16}:.)(\d{2})\s+(\w{9}=(\d{2})\s+\w{5}=(\d{2})|\w{7}).*?(\n|\r\n)\w+.:(\d{2}.?)(\d{2,3})\s+(\w+\|?\s?\w+?)\s</Value>
     </Setting>
-    <Setting Name="Update" Type="System.Boolean" Scope="User">
+    <Setting Name="AutoUpdate" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Debug" Type="System.Boolean" Scope="User">
@@ -32,10 +32,10 @@
     <Setting Name="RtsEnable" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="numericUpDown_High" Type="System.Int32" Scope="User">
+    <Setting Name="NumericUpDown_High" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">30</Value>
     </Setting>
-    <Setting Name="numericUpDown_Low" Type="System.Int32" Scope="User">
+    <Setting Name="NumericUpDown_Low" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">16</Value>
     </Setting>
   </Settings>

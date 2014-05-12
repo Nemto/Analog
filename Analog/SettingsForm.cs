@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
+using Analog.Classes;
 
 namespace Analog
 {
@@ -19,8 +20,7 @@ namespace Analog
             LoadSettings();
         }
 
-        Properties.Settings s = new Properties.Settings();
-
+        Config config = new Config();
 
         private void button_Save_Click(object sender, EventArgs e)
         {
@@ -38,37 +38,35 @@ namespace Analog
         private void LoadSettings()
         {
             // Regex
-            textBox_Regex.Text = s.Regex;
+            textBox_Regex.Text = config.Regex;
 
             // RS232
-            textBox_COM.Text = s.SerialPort;
-            numericUpDown_BaudRate.Value = s.BaudRate;
-            numericUpDown_DataBits.Value = s.DataBits;
-            numericUpDown_ReadTimeout.Value = s.ReadTimeout;
-            numericUpDown_WriteTimeout.Value = s.WriteTimeout;
-            comboBox_DTR.Text = s.DtrEnable.ToString();
-            comboBox_RTS.Text = s.RtsEnable.ToString();
+            textBox_COM.Text = config.SerialPort;
+            numericUpDown_BaudRate.Value = config.BaudRate;
+            numericUpDown_DataBits.Value = config.DataBits;
+            numericUpDown_ReadTimeout.Value = config.ReadTimeout;
+            numericUpDown_WriteTimeout.Value = config.WriteTimeout;
+            comboBox_DTR.Text = config.DtrEnable.ToString();
+            comboBox_RTS.Text = config.RtsEnable.ToString();
 
             // Program
-            comboBox_Update.Text = s.Update.ToString();
-            comboBox_Debug.Text = s.Debug.ToString();
+            comboBox_Update.Text = config.AutoUpdate.ToString();
+            comboBox_Debug.Text = config.Debug.ToString();
         }
 
         private void SaveSettings()
         {
-            s.Regex = textBox_Regex.Text;
-
-            s.SerialPort = textBox_COM.Text;
-            s.BaudRate = (int)numericUpDown_BaudRate.Value;
-            s.DataBits = (int)numericUpDown_DataBits.Value;
-            s.ReadTimeout = (int)numericUpDown_ReadTimeout.Value;
-            s.WriteTimeout = (int)numericUpDown_WriteTimeout.Value;
-            s.DtrEnable = Convert.ToBoolean(comboBox_DTR.Text);
-            s.RtsEnable = Convert.ToBoolean(comboBox_RTS.Text);
-            s.Update = Convert.ToBoolean(comboBox_Update.Text);
-            s.Debug = Convert.ToBoolean(comboBox_Debug.Text);
-
-            s.Save();
+            // Todo: unchanged settings
+            config.SerialPort = textBox_COM.Text.ToUpper();
+            config.Regex = textBox_Regex.Text;
+            config.BaudRate = (int)numericUpDown_BaudRate.Value;
+            config.DataBits = (int)numericUpDown_DataBits.Value;
+            config.ReadTimeout = (int)numericUpDown_ReadTimeout.Value;
+            config.WriteTimeout = (int)numericUpDown_WriteTimeout.Value;
+            config.DtrEnable = Convert.ToBoolean(comboBox_DTR.Text);
+            config.RtsEnable = Convert.ToBoolean(comboBox_RTS.Text);
+            config.AutoUpdate = Convert.ToBoolean(comboBox_Update.Text);
+            config.Debug = Convert.ToBoolean(comboBox_Debug.Text);
         }
 
     }

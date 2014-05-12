@@ -8,33 +8,35 @@ namespace Analog.Classes
     class Testing
     {
 
-/*
-    [0][0] = ANALOGVERDI=04 FORVARSEL=45 ALARM=55
-    ADR.:1306 N|dlys 
-    [0][1] = ANALOGVERDI=
-    [0][2] = 04
-    [0][3] = FORVARSEL=45 ALARM=55
-    [0][4] = 45
-    [0][5] = 55
-    [0][6] = 9
+        /* Regex groups:
+         * 
+            [0][0] = ANALOGVERDI=04 FORVARSEL=45 ALARM=55
+            ADR.:1306 N|dlys 
+            [0][1] = ANALOGVERDI=
+            [0][2] = 04
+            [0][3] = FORVARSEL=45 ALARM=55
+            [0][4] = 45
+            [0][5] = 55
+            [0][6] = 9
 
-    [0][7] = 13
-    [0][8] = 06
-    [0][9] = N|dlys
-    [1][0] = NEDSMUSSINGSGRAD: 00 PROSENT
-    ADR.:02.062 Optisk Detektor
+            [0][7] = 13
+            [0][8] = 06
+            [0][9] = N|dlys
+            [1][0] = NEDSMUSSINGSGRAD: 00 PROSENT
+            ADR.:02.062 Optisk Detektor
 
-    [1][1] = NEDSMUSSINGSGRAD: 
-    [1][2] = 00
-    [1][3] = PROSENT
-    [1][4] = 
-    [1][5] = 
-    [1][6] = 
+            [1][1] = NEDSMUSSINGSGRAD: 
+            [1][2] = 00
+            [1][3] = PROSENT
+            [1][4] = 
+            [1][5] = 
+            [1][6] = 
 
-    [1][7] = 02.
-    [1][8] = 062
-    [1][9] = Optisk Detektor
-*/
+            [1][7] = 02.
+            [1][8] = 062
+            [1][9] = Optisk Detektor
+        */
+
         public static List<string> daLog()
         {
             List<string> list = new List<string>();
