@@ -52,9 +52,6 @@ namespace Analog
             // Program
             comboBox_Update.Text = s.Update.ToString();
             comboBox_Debug.Text = s.Debug.ToString();
-
-            // About
-            textBox_Version.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         private void SaveSettings()

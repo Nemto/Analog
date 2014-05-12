@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -213,7 +212,7 @@
             // 
             this.omToolStripMenuItem.Name = "omToolStripMenuItem";
             this.omToolStripMenuItem.Size = new System.Drawing.Size(197, 22);
-            this.omToolStripMenuItem.Text = "Om M42111..";
+            this.omToolStripMenuItem.Text = "Om..";
             this.omToolStripMenuItem.Click += new System.EventHandler(this.omToolStripMenuItem_Click);
             // 
             // openFileDialog1
@@ -373,7 +372,6 @@
             this.Controls.Add(this.menuStrip1);
             this.Cursor = System.Windows.Forms.Cursors.Arrow;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "MainForm";

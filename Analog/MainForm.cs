@@ -16,13 +16,13 @@ using Analog.Classes;
 using System.Threading;
 using System.Net;
 
+
 namespace Analog
 {
     /// <summary>
     /// Kilder:
     /// http://stackoverflow.com/questions/5525181/find-each-regex-match-in-string
     /// http://stackoverflow.com/questions/5101217/rs232-serial-port-communication-c-sharp-win7-net-framework-3-5-sp1
-    /// http://www.iconarchive.com/show/mono-general-2-icons-by-custom-icon-design.html
     /// </summary>
     /// 
     public partial class MainForm : Form
@@ -368,7 +368,8 @@ namespace Analog
         /// <param name="e"></param>
         private void omToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Process.Start("https://github.com/Nemto/Analog");
+            AboutBox abox = new AboutBox();
+            abox.Show();
         }
 
         private void numericUpDown_Low_ValueChanged(object sender, EventArgs e)
