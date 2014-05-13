@@ -13,6 +13,7 @@ namespace Analog
 {
     public partial class SettingsForm : Form
     {
+        Config config = new Config();
         
         public SettingsForm()
         {
@@ -20,18 +21,15 @@ namespace Analog
             LoadSettings();
         }
 
-        Config config = new Config();
-
         private void button_Save_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.OK;
             SaveSettings();
-
-            var mainForm = new MainForm();
-            mainForm.restart();
         }
 
         private void button_Cancel_Click(object sender, EventArgs e)
         {
+            this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 

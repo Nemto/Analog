@@ -167,5 +167,17 @@ namespace Analog.Properties {
                 this["NumericUpDown_Low"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool Restart {
+            get {
+                return ((bool)(this["Restart"]));
+            }
+            set {
+                this["Restart"] = value;
+            }
+        }
     }
 }

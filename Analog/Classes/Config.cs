@@ -101,6 +101,19 @@ namespace Analog.Classes
                 s.Save();
             }
         }
+
+        public bool Restart
+        {
+            get
+            {
+                return s.Restart;
+            }
+            set
+            {
+                s.Restart = value;
+                s.Save();
+            }
+        }
         #endregion
 
         #region Application Settings

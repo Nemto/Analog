@@ -9,7 +9,7 @@ namespace Analog.Classes
 {
     class Upgrade
     {
-        public static bool Needed(string currentVersion)
+        public static bool Check(string currentVersion)
         {
             try
             {

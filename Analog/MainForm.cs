@@ -1,21 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.IO.Ports;
-using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Analog.Classes;
+using System.IO.Ports;
+using System.IO;
 using System.Threading;
-using System.Net;
-
+using Analog.Classes;
 
 namespace Analog
 {
@@ -25,6 +17,7 @@ namespace Analog
     /// http://stackoverflow.com/questions/5101217/rs232-serial-port-communication-c-sharp-win7-net-framework-3-5-sp1
     /// </summary>
     /// 
+
     public partial class MainForm : Form
     {
 
@@ -33,16 +26,25 @@ namespace Analog
         {
             InitializeComponent();
 
-            if (config.Debug)
-                this.Text += " [Debug]";
+            // Check for new release if AutoUpdate is true
+            if (config.AutoUpdate && !config.Restart)
+                checkRelease();
 
-            groupBox_RS232.Text += string.Format(" ({0})", config.SerialPort);
+            UpdateUI();
+        }
+
+
+        public void UpdateUI()
+        {
+            if (config.Debug)
+                this.Text = "Analog [Debug]";
+            else
+                this.Text = "Analog";
+
+            groupBox_RS232.Text = string.Format("RS232 ({0})", config.SerialPort);
             numericUpDown_High.Value = config.NumericUpDown_High;
             numericUpDown_Low.Value = config.NumericUpDown_Low;
-
-            // Check for new release if AutoUpdate is true
-            if (config.AutoUpdate)
-                checkRelease();
+            config.Restart = false;
         }
 
         // Check for new releases
@@ -51,19 +53,12 @@ namespace Analog
             var url = "https://github.com/Nemto/Analog/releases";
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
-            if (Upgrade.Needed(currentVersion))
+            if (Upgrade.Check(currentVersion))
                 if (MessageBox.Show("En ny oppdatering er tilgjengelig!\n Vil du laste ned nå?\n\n" + url, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     Process.Start(url);
             
             if (showResponse)
                 MessageBox.Show("Ingen nye oppdateringer.");
-        }
-
-        // Restart app when when settings is saved
-        public void restart()
-        {
-            // Is there a better way to update UI then this?
-            Application.Restart();
         }
 
         // ErrorCounter
@@ -184,7 +179,7 @@ namespace Analog
             using (SaveFileDialog dialog = new SaveFileDialog())
             {
                 dialog.Filter = "All files (*.*)|*.*";
-                dialog.FileName = "log_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
+                dialog.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
                 dialog.FilterIndex = 2;
                 dialog.RestoreDirectory = true;
 
@@ -197,7 +192,7 @@ namespace Analog
                     string CsvFpath = dialog.FileName.ToString();
                     try
                     {
-                        System.IO.StreamWriter csvFileWriter = new StreamWriter(CsvFpath, false);
+                        StreamWriter csvFileWriter = new StreamWriter(CsvFpath, false);
 
                         string columnHeaderText = "";
 
@@ -213,7 +208,6 @@ namespace Analog
                             columnHeaderText = columnHeaderText + ';' + dataGridView1.Columns[i].HeaderText;
                         }
 
-
                         csvFileWriter.WriteLine(columnHeaderText);
 
                         foreach (DataGridViewRow dataRowObject in dataGridView1.Rows)
@@ -221,7 +215,6 @@ namespace Analog
                             if (!dataRowObject.IsNewRow)
                             {
                                 string dataFromGrid = dataRowObject.Cells[0].Value.ToString();
-
                                 for (int i = 1; i <= countColumn; i++)
                                 {
                                     dataFromGrid = dataFromGrid + ';' + dataRowObject.Cells[i].Value.ToString();
@@ -234,11 +227,11 @@ namespace Analog
                         csvFileWriter.Flush();
                         csvFileWriter.Close();
                     }
-                    catch (Exception exceptionObject)
+                    catch (Exception ex)
                     {
-                        MessageBox.Show(exceptionObject.ToString());
+                        MessageBox.Show(ex.ToString());
                     }
-                }
+                }  
             }
         }
 
@@ -272,16 +265,14 @@ namespace Analog
         // About
         private void omToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AboutBox abox = new AboutBox();
-            abox.Show();
+            AboutBox aboutBox = new AboutBox();
+            aboutBox.ShowDialog();
         }
-
-
-
 
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string fileName = "README.txt";
+            MessageBox.Show(fileName);
             try
             {
                 Process.Start(fileName);
@@ -304,7 +295,11 @@ namespace Analog
         private void instillingerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm settings = new SettingsForm();
-            settings.Show();
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                config.Restart = true;
+                Application.Restart();
+            }
         }
 
         #endregion
@@ -319,17 +314,15 @@ namespace Analog
             try
             {
                 mySerialPort = new SerialPort(config.SerialPort);
-
+                mySerialPort.ReadTimeout = config.ReadTimeout;
+                mySerialPort.WriteTimeout = config.WriteTimeout;
+                mySerialPort.DataBits = config.DataBits;
+                mySerialPort.DtrEnable = config.DtrEnable;
+                mySerialPort.RtsEnable = config.RtsEnable;
                 mySerialPort.BaudRate = config.BaudRate;
                 mySerialPort.Parity = Parity.None;
                 mySerialPort.StopBits = StopBits.One;
-                mySerialPort.DataBits = config.DataBits;
                 mySerialPort.Handshake = Handshake.None;
-                mySerialPort.ReadTimeout = config.ReadTimeout;
-                mySerialPort.WriteTimeout = config.WriteTimeout;
-
-                mySerialPort.DtrEnable = config.DtrEnable;
-                mySerialPort.RtsEnable = config.RtsEnable;
 
                 mySerialPort.Open();
                 mySerialPort.DataReceived += DataReceivedHandler;
