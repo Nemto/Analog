@@ -118,18 +118,18 @@ namespace Analog
         }
 
         // Insert to datagridview
-        private void populateGrid(string addresse, string detektortype, int? prealarm, int? alarm, int? analogverdi, Color color)
+        private void populateGrid(string detectorAddress, string detektorType, int? preAlarm, int? alarm, int? value, Color color)
         {
-            DataGridViewRow row1 = (DataGridViewRow)dataGridView1.Rows[0].Clone();
+            var row1 = (DataGridViewRow) dataGridView1.Rows[0].Clone();
 
-            row1.Cells[0].Value = addresse;             //loop+adress
-            row1.Cells[1].Value = detektortype;         //type
-            row1.Cells[2].Value = prealarm;             //pre-al
+            row1.Cells[0].Value = detectorAddress;      //loop+adress
+            row1.Cells[1].Value = detektorType;         //type
+            row1.Cells[2].Value = preAlarm;             //pre-al
             row1.Cells[3].Value = alarm;                //alarm
-            row1.Cells[4].Value = analogverdi;          //value
+            row1.Cells[4].Value = value;                //value
             row1.DefaultCellStyle.BackColor = color;    //rowcolor
 
-            // Paint it gray row grey if alarm is 99 or 0
+            // Paint it grey if alarm is 99 or 0
             if (alarm == 0 || alarm == 99)
             {
                 row1.DefaultCellStyle.BackColor = Color.LightGray;
@@ -171,69 +171,57 @@ namespace Analog
             }
         }
 
-        // Save file
-        private void saveFile_Show()
+        private void SaveFileShow()
         {
-            DateTime dateTime = DateTime.Now;
+            var dateTime = DateTime.Now;
 
-            using (SaveFileDialog dialog = new SaveFileDialog())
+            using(saveFileDialog1)
             {
-                dialog.Filter = "All files (*.*)|*.*";
-                dialog.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
-                dialog.FilterIndex = 2;
-                dialog.RestoreDirectory = true;
+                saveFileDialog1.Filter = "All files (*.*)|*.*";
+                saveFileDialog1.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
+                saveFileDialog1.FilterIndex = 2;
+                saveFileDialog1.RestoreDirectory = true;
 
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if(saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    using (Stream stream = dialog.OpenFile())
-                    {
-                    }
-
-                    string CsvFpath = dialog.FileName.ToString();
+                    var filePath = saveFileDialog1.FileName.ToString();
                     try
                     {
-                        StreamWriter csvFileWriter = new StreamWriter(CsvFpath, false);
-
-                        string columnHeaderText = "";
-
-                        int countColumn = dataGridView1.ColumnCount - 1;
-
-                        if (countColumn >= 0)
+                        using (var sw = new StreamWriter(filePath, false))
                         {
-                            columnHeaderText = dataGridView1.Columns[0].HeaderText;
-                        }
+                            var columnCount = dataGridView1.ColumnCount - 1;
+                            var columnHeader = "";
 
-                        for (int i = 1; i <= countColumn; i++)
-                        {
-                            columnHeaderText = columnHeaderText + ';' + dataGridView1.Columns[i].HeaderText;
-                        }
+                            // Write coulumn headers to file
+                            if (columnCount >= 0)
+                                columnHeader = dataGridView1.Columns[0].HeaderText;
 
-                        csvFileWriter.WriteLine(columnHeaderText);
-
-                        foreach (DataGridViewRow dataRowObject in dataGridView1.Rows)
-                        {
-                            if (!dataRowObject.IsNewRow)
+                            for (int i = 0; i <= columnCount; i++)
+                                columnHeader = columnHeader + ";" + dataGridView1.Columns[i].HeaderText;
+                            sw.WriteLine(columnHeader);
+                            /* fix
+                            // Write datagridrow data to file
+                            foreach (DataGridViewRow row in dataGridView1.Rows)
                             {
-                                string dataFromGrid = dataRowObject.Cells[0].Value.ToString();
-                                for (int i = 1; i <= countColumn; i++)
+                                if (!row.IsNewRow)
                                 {
-                                    dataFromGrid = dataFromGrid + ';' + dataRowObject.Cells[i].Value.ToString();
+                                    var rowData = row.Cells[0].Value.ToString();
+                                    for (int i = 1; i <= columnCount; i++)
+                                        rowData = rowData + ";" + row.Cells[i].Value.ToString();
+                                    sw.WriteLine(rowData);
                                 }
-
-                                csvFileWriter.WriteLine(dataFromGrid);
                             }
+                             */
                         }
-
-                        csvFileWriter.Flush();
-                        csvFileWriter.Close();
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.ToString());
+                        MessageBox.Show(ex.Message, "Error");
                     }
-                }  
+                }
             }
         }
+
 
         #endregion
 
@@ -256,7 +244,7 @@ namespace Analog
         // Save as
         private void lagreSomToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            saveFile_Show();
+            SaveFileShow();
         }
         #endregion
 

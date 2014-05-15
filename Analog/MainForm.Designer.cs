@@ -59,6 +59,7 @@
             this.button_Send = new System.Windows.Forms.Button();
             this.textBox_RS232 = new System.Windows.Forms.TextBox();
             this.button_Start = new System.Windows.Forms.Button();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Low)).BeginInit();
@@ -151,21 +152,21 @@
             // åpneFilToolStripMenuItem
             // 
             this.åpneFilToolStripMenuItem.Name = "åpneFilToolStripMenuItem";
-            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.åpneFilToolStripMenuItem.Text = "Åpne fil";
             this.åpneFilToolStripMenuItem.Click += new System.EventHandler(this.åpneFilToolStripMenuItem_Click);
             // 
             // tømVinduToolStripMenuItem
             // 
             this.tømVinduToolStripMenuItem.Name = "tømVinduToolStripMenuItem";
-            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.tømVinduToolStripMenuItem.Text = "Tøm vindu";
             this.tømVinduToolStripMenuItem.Click += new System.EventHandler(this.tømVinduToolStripMenuItem_Click);
             // 
             // lagreSomToolStripMenuItem
             // 
             this.lagreSomToolStripMenuItem.Name = "lagreSomToolStripMenuItem";
-            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lagreSomToolStripMenuItem.Text = "Lagre som..";
             this.lagreSomToolStripMenuItem.Click += new System.EventHandler(this.lagreSomToolStripMenuItem_Click);
             // 
@@ -425,6 +426,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
         private System.Windows.Forms.CheckBox checkBox_Quad;
         private System.Windows.Forms.ToolStripMenuItem erDetteNyesteVersjonToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 
