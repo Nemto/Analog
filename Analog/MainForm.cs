@@ -189,29 +189,25 @@ namespace Analog
                     {
                         using (var sw = new StreamWriter(filePath, false))
                         {
-                            var columnCount = dataGridView1.ColumnCount - 1;
-                            var columnHeader = "";
-
                             // Write coulumn headers to file
-                            if (columnCount >= 0)
-                                columnHeader = dataGridView1.Columns[0].HeaderText;
-
+                            var columnHeader = "";
+                            var columnCount = dataGridView1.ColumnCount - 1;
                             for (int i = 0; i <= columnCount; i++)
-                                columnHeader = columnHeader + ";" + dataGridView1.Columns[i].HeaderText;
+                                columnHeader += string.Format("{0};", dataGridView1.Columns[i].HeaderText);
                             sw.WriteLine(columnHeader);
-                            /* fix
+
                             // Write datagridrow data to file
                             foreach (DataGridViewRow row in dataGridView1.Rows)
                             {
                                 if (!row.IsNewRow)
                                 {
-                                    var rowData = row.Cells[0].Value.ToString();
-                                    for (int i = 1; i <= columnCount; i++)
-                                        rowData = rowData + ";" + row.Cells[i].Value.ToString();
+                                    var rowData = "";
+                                    for (int i = 0; i <= columnCount; i++)
+                                        rowData += row.Cells[i].Value == null ? ";" 
+                                            : string.Format("{0};", row.Cells[i].Value.ToString());
                                     sw.WriteLine(rowData);
                                 }
                             }
-                             */
                         }
                     }
                     catch (Exception ex)
