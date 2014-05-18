@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.filToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.åpneFilToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,7 +40,7 @@
             this.hyperterminalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.erDetteNyesteVersjonToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.omToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.checkBox_ShowAll = new System.Windows.Forms.CheckBox();
             this.numericUpDown_Low = new System.Windows.Forms.NumericUpDown();
@@ -59,7 +54,12 @@
             this.button_Send = new System.Windows.Forms.Button();
             this.textBox_RS232 = new System.Windows.Forms.TextBox();
             this.button_Start = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_Low)).BeginInit();
@@ -84,48 +84,6 @@
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dataGridView1.Size = new System.Drawing.Size(407, 283);
             this.dataGridView1.TabIndex = 1;
-            // 
-            // Column1
-            // 
-            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.Column1.HeaderText = "Adresse";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.Width = 70;
-            // 
-            // Column3
-            // 
-            this.Column3.FillWeight = 352.7559F;
-            this.Column3.HeaderText = "Detektor Type";
-            this.Column3.Name = "Column3";
-            this.Column3.ReadOnly = true;
-            this.Column3.Width = 130;
-            // 
-            // Column2
-            // 
-            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column2.FillWeight = 15.74803F;
-            this.Column2.HeaderText = "Forvarsel";
-            this.Column2.Name = "Column2";
-            this.Column2.ReadOnly = true;
-            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            // 
-            // Column4
-            // 
-            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column4.FillWeight = 15.74803F;
-            this.Column4.HeaderText = "Alarm";
-            this.Column4.Name = "Column4";
-            this.Column4.ReadOnly = true;
-            // 
-            // Column5
-            // 
-            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Column5.FillWeight = 15.74803F;
-            this.Column5.HeaderText = "Verdi";
-            this.Column5.Name = "Column5";
-            this.Column5.ReadOnly = true;
             // 
             // menuStrip1
             // 
@@ -152,21 +110,21 @@
             // åpneFilToolStripMenuItem
             // 
             this.åpneFilToolStripMenuItem.Name = "åpneFilToolStripMenuItem";
-            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.åpneFilToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.åpneFilToolStripMenuItem.Text = "Åpne fil";
             this.åpneFilToolStripMenuItem.Click += new System.EventHandler(this.åpneFilToolStripMenuItem_Click);
             // 
             // tømVinduToolStripMenuItem
             // 
             this.tømVinduToolStripMenuItem.Name = "tømVinduToolStripMenuItem";
-            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.tømVinduToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.tømVinduToolStripMenuItem.Text = "Tøm vindu";
             this.tømVinduToolStripMenuItem.Click += new System.EventHandler(this.tømVinduToolStripMenuItem_Click);
             // 
             // lagreSomToolStripMenuItem
             // 
             this.lagreSomToolStripMenuItem.Name = "lagreSomToolStripMenuItem";
-            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lagreSomToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.lagreSomToolStripMenuItem.Text = "Lagre som..";
             this.lagreSomToolStripMenuItem.Click += new System.EventHandler(this.lagreSomToolStripMenuItem_Click);
             // 
@@ -216,9 +174,9 @@
             this.omToolStripMenuItem.Text = "Om..";
             this.omToolStripMenuItem.Click += new System.EventHandler(this.omToolStripMenuItem_Click);
             // 
-            // openFileDialog1
+            // openFileDialog
             // 
-            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog.FileName = "openFileDialog1";
             // 
             // toolStrip1
             // 
@@ -361,6 +319,50 @@
             this.button_Start.UseVisualStyleBackColor = true;
             this.button_Start.Click += new System.EventHandler(this.button_Start_Click);
             // 
+            // Column1
+            // 
+            this.Column1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
+            this.Column1.HeaderText = "Adresse";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.Width = 70;
+            // 
+            // Column3
+            // 
+            this.Column3.FillWeight = 352.7559F;
+            this.Column3.HeaderText = "Detektor Type";
+            this.Column3.Name = "Column3";
+            this.Column3.ReadOnly = true;
+            this.Column3.Width = 130;
+            // 
+            // Column2
+            // 
+            this.Column2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column2.FillWeight = 15.74803F;
+            this.Column2.HeaderText = "Forvarsel";
+            this.Column2.Name = "Column2";
+            this.Column2.ReadOnly = true;
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Column4
+            // 
+            this.Column4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column4.FillWeight = 15.74803F;
+            this.Column4.HeaderText = "Alarm";
+            this.Column4.Name = "Column4";
+            this.Column4.ReadOnly = true;
+            this.Column4.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
+            // Column5
+            // 
+            this.Column5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Column5.FillWeight = 15.74803F;
+            this.Column5.HeaderText = "Verdi";
+            this.Column5.Name = "Column5";
+            this.Column5.ReadOnly = true;
+            this.Column5.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -400,7 +402,7 @@
         private System.Windows.Forms.ToolStripMenuItem hjelpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem eEPROMSetupToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem hyperterminalToolStripMenuItem;
-        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripMenuItem omToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filToolStripMenuItem;
@@ -419,14 +421,14 @@
         private System.Windows.Forms.TextBox textBox_Send;
         private System.Windows.Forms.Button button_Send;
         private System.Windows.Forms.ToolStripMenuItem instillingerToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBox_Quad;
+        private System.Windows.Forms.ToolStripMenuItem erDetteNyesteVersjonToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
-        private System.Windows.Forms.CheckBox checkBox_Quad;
-        private System.Windows.Forms.ToolStripMenuItem erDetteNyesteVersjonToolStripMenuItem;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

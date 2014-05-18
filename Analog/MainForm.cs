@@ -54,11 +54,15 @@ namespace Analog
             var currentVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
 
             if (Upgrade.Check(currentVersion))
-                if (MessageBox.Show("En ny oppdatering er tilgjengelig!\n Vil du laste ned nå?\n\n" + url, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            { 
+                if (MessageBox.Show("En ny oppdatering er tilgjengelig!\nVil du laste ned nå?\n\n" + url, "", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     Process.Start(url);
-            
-            if (showResponse)
-                MessageBox.Show("Ingen nye oppdateringer.");
+            }
+            else
+            {
+                if (showResponse)
+                    MessageBox.Show("Ingen nye oppdateringer.");
+            }
         }
 
         // ErrorCounter
@@ -77,7 +81,7 @@ namespace Analog
 
             string detektorAdresse, detektorType;
             int? forvarselGrense, alarmGrense, analogvedi;
-     
+
             foreach (Match match in regex.Matches(input))
             {
                 detektorAdresse = match.Groups[7].Value + match.Groups[8].Value;
@@ -85,11 +89,9 @@ namespace Analog
                 forvarselGrense = To.int32(match.Groups[4].Value);
                 alarmGrense = To.int32(match.Groups[5].Value);
                 analogvedi = To.int32(match.Groups[2].Value);
-                
+
                 if (match.Groups[3].Value == "PROSENT")
                     detektorType = "[IQ8] " + detektorType;
-
-                //Todo: Prevent logging of deactivated detectors
 
                 // Send bad apollo values to gridview
                 if (!checkBox_Quad.Checked)
@@ -104,7 +106,7 @@ namespace Analog
                 // Send bad quad values to gridview
                 if (checkBox_Quad.Checked)
                 {
-                    if(analogvedi > numericUpDown_Low.Value)
+                    if (analogvedi > numericUpDown_Low.Value)
                     {
                         populateGrid(detektorAdresse, detektorType, forvarselGrense, alarmGrense, analogvedi, Color.White);
                         config.ErrorCount++;
@@ -175,16 +177,16 @@ namespace Analog
         {
             var dateTime = DateTime.Now;
 
-            using(saveFileDialog1)
+            using(saveFileDialog)
             {
-                saveFileDialog1.Filter = "All files (*.*)|*.*";
-                saveFileDialog1.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
-                saveFileDialog1.FilterIndex = 2;
-                saveFileDialog1.RestoreDirectory = true;
+                saveFileDialog.Filter = "All files (*.*)|*.*";
+                saveFileDialog.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
+                saveFileDialog.FilterIndex = 2;
+                saveFileDialog.RestoreDirectory = true;
 
-                if(saveFileDialog1.ShowDialog() == DialogResult.OK)
+                if(saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    var filePath = saveFileDialog1.FileName.ToString();
+                    var filePath = saveFileDialog.FileName.ToString();
                     try
                     {
                         using (var sw = new StreamWriter(filePath, false))
@@ -311,7 +313,9 @@ namespace Analog
                 mySerialPort.Open();
                 mySerialPort.DataReceived += DataReceivedHandler;
 
-                textBox_RS232.Text = "Klar, trykk M42111 for å starte utskrift.\r\n";
+                textBox_RS232.Text = checkBox_Quad.Checked ? "Klar, trykk M6<kode>2512(00%) for å starte utskrift.\r\n" :
+                    "Klar, trykk M42111 for å starte utskrift.\r\n";
+ 
                 button_Send.Enabled = true;
                 button_Start.Text = "Stop";
             }
@@ -325,7 +329,6 @@ namespace Analog
         {
             try
             {
-
                 if (config.Debug)
                     MessageBox.Show(textBox_RS232.Text);
                 
@@ -428,6 +431,8 @@ namespace Analog
                 numericUpDown_Low.Value = 50; // What is the highest allowed value here??
                 numericUpDown_High.Value = 0;
                 numericUpDown_High.Visible = false;
+                dataGridView1.Columns[2].Visible = false;
+                dataGridView1.Columns[3].Visible = false;
             }
             else
             {
@@ -438,6 +443,8 @@ namespace Analog
                 numericUpDown_High.Value = config.NumericUpDown_High;
                 numericUpDown_Low.Value = config.NumericUpDown_Low;
                 numericUpDown_High.Visible = true;
+                dataGridView1.Columns[2].Visible = true;
+                dataGridView1.Columns[3].Visible = true;
             }
         }
 
