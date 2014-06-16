@@ -144,31 +144,29 @@ namespace Analog
         #region FileDialogs
         
         // Open file
-        private void selectFile_show()
+        private void SelectFileShow()
         {
             Stream myStream = null;
-            OpenFileDialog openFileDialog1 = new OpenFileDialog();
+            openFileDialog.InitialDirectory = "c:\\";
+            openFileDialog.Filter = "Alle filer (*.*)|*.*";
+            openFileDialog.FilterIndex = 2;
+            openFileDialog.RestoreDirectory = true;
 
-            openFileDialog1.InitialDirectory = "c:\\";
-            openFileDialog1.Filter = "Alle filer (*.*)|*.*";
-            openFileDialog1.FilterIndex = 2;
-            openFileDialog1.RestoreDirectory = true;
-
-            if (openFileDialog1.ShowDialog() == DialogResult.OK)
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
-                    if ((myStream = openFileDialog1.OpenFile()) != null)
+                    if ((myStream = openFileDialog.OpenFile()) != null)
                     {
                         using (myStream)
                         {
-                            matchText(File.ReadAllText(openFileDialog1.FileName.ToString()));
+                            matchText(File.ReadAllText(openFileDialog.FileName.ToString()));
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Kunne ikke lese filen\n\nEx. melding: " + ex.Message);
+                    MessageBox.Show(ex.Message, "Error");
                 }
             }
         }
@@ -179,8 +177,8 @@ namespace Analog
 
             using(saveFileDialog)
             {
-                saveFileDialog.Filter = "All files (*.*)|*.*";
-                saveFileDialog.FileName = "analog_" + dateTime.ToString("ddMMyyhhmm") + ".csv";
+                saveFileDialog.Filter = "All files (*.*)|*.*|CSV (*.csv)|*.csv";
+                saveFileDialog.FileName = string.Format("Analogverdilog - {0} - Anleggsnavn.csv", dateTime.ToString("dd.MM.yy"));
                 saveFileDialog.FilterIndex = 2;
                 saveFileDialog.RestoreDirectory = true;
 
@@ -229,7 +227,7 @@ namespace Analog
         private void åpneFilToolStripMenuItem_Click(object sender, EventArgs e)
         {
             config.ErrorCount = 0;
-            selectFile_show();
+            SelectFileShow();
         }
 
         // Empty window
@@ -258,7 +256,6 @@ namespace Analog
         private void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string fileName = "README.txt";
-            MessageBox.Show(fileName);
             try
             {
                 Process.Start(fileName);
