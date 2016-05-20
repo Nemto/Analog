@@ -3,6 +3,7 @@ Analog
 =======
 Loop scanner for Eltek Delta DA and ANX95 systems.
 
+![release](https://cloud.githubusercontent.com/assets/4086225/2870937/07fc6d6a-d2e9-11e3-8226-6608aa4fbda8.PNG)
 
 
 Setup
